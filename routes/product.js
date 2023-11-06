@@ -30,7 +30,7 @@ router.post("/add-product", async function (req, res, next) {
 router.get("/kind", async function (req, res, next) {
   var kind = req.query.kind;
   var data = await modelProduct.find(
-    {  kind : kind, name, brand, price, color, star, content, img },
+    { kind: kind },
   );
   res.json(data);
 });
