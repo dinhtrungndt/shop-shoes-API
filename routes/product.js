@@ -26,12 +26,11 @@ router.post("/add-product", async function (req, res, next) {
   }
 });
 
-// http://localhost:3000/product/get-product?kind=women
+// http://localhost:3000/product/kind?kind=women
 router.get("/kind", async function (req, res, next) {
   var kind = req.query.kind;
   var data = await modelProduct.find(
-    { kind: kind },
-    "kind price"
+    {  kind : kind, name, brand, price, color, star, content, img },
   );
   res.json(data);
 });
