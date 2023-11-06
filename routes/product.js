@@ -26,4 +26,29 @@ router.post("/add-product", async function (req, res, next) {
   }
 });
 
+// http://localhost:3000/product/get-product?kind=women
+router.get("/kind", async function (req, res, next) {
+  var kind = req.query.kind;
+
+  var query = {
+    kind: { $regex: kind, $options: "i" },
+  };
+  var data = await modelProduct.find(query, "kind price quantity");
+  res.json(data);
+});
+
+router.get('/search', (req,res) => {
+	var name_search = req.query.name // lấy giá trị của key name trong query parameters gửi lên
+	var age_search = req.query.age // lấy giá trị của key age trong query parameters gửi lên
+	var result = modelProduct.filter( (user) => {
+		// tìm kiếm chuỗi name_search trong user name. 
+		// Lưu ý: Chuyển tên về cùng in thường hoặc cùng in hoa để không phân biệt hoa, thường khi tìm kiếm
+		return user.name.toLowerCase().indexOf(name_search.toLowerCase()) !== -1 && user.age === parseInt(age_search)
+	})
+
+	res.render('users/index', {
+		modelProduct: result // render lại trang users/index với biến users bây giờ chỉ bao gồm các kết quả phù hợp
+	});
+})
+
 module.exports = router;
