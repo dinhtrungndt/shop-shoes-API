@@ -29,11 +29,10 @@ router.post("/add-product", async function (req, res, next) {
 // http://localhost:3000/product/get-product?kind=women
 router.get("/kind", async function (req, res, next) {
   var kind = req.query.kind;
-
-  var query = {
-    kind: { $regex: kind, $options: "i" },
-  };
-  var data = await modelProduct.find(query, "kind price quantity");
+  var data = await modelProduct.find(
+    { kind: kind },
+    "kind price"
+  );
   res.json(data);
 });
 
